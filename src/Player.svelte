@@ -1,14 +1,10 @@
-<script type="text/javascript"  context = "module">
-  
-</script>
-
 <script type="text/javascript">
+import {onMount} from 'svelte'
 
 let element
 let progress
 let progressContainer
 export let title
-export let cover
 export let audio
 let isPlaying = false
 let songIndex = 0;
@@ -16,6 +12,16 @@ let mins = 0
 let secs = 0
 let dmins = 0
 let dsecs = 0
+let duration
+let currentTime
+
+const songs = ['oso', 'lucid', 'no do', 'time'];
+
+// Update song details
+function loadSong(song) {
+  title = song;
+  audio = 'music/'+song+'.mp3';
+}
 
 // Play song
 function playSong() {
@@ -46,8 +52,9 @@ function prevSong() {
   }
 
   loadSong(songs[songIndex]);
-
   playSong();
+  const progressPercent = (currentTime / duration) * 100;
+  progress.style.width = 0;
 }
 
 // Next song
@@ -57,10 +64,12 @@ function nextSong() {
   if (songIndex > songs.length - 1) {
     songIndex = 0;
   }
-
+  
   loadSong(songs[songIndex]);
-
   playSong();
+  const progressPercent = (currentTime / duration) * 100;
+  progress.style.width = 0;
+  
 }
 
 // Update progress bar
@@ -85,6 +94,7 @@ function setProgress(e) {
   element.currentTime = (clickX / width) * duration;
 }
 
+onMount( () => {pauseSong})
 </script>
 
 <div class="card" style="border-radius: 0px">
@@ -108,22 +118,22 @@ function setProgress(e) {
                     </button>
                   </div>
               </div>
-            <div class="col-sm-8" style="margin-top: -15px;">
+            <div class="col-sm-7" style="margin-top: -15px;">
                 <div class="">
                   <h4 id="title">{title}</h4>
                 </div>
 
-                <audio src="{audio}" id="audio" bind:this={element} on:timeupdate="{updateProgress}" on:ended={nextSong}></audio>
+                <audio autoplay src="{audio}" id="audio" bind:this={element} on:timeupdate="{updateProgress}" on:ended={nextSong}></audio>
                 <div style="display: flex;">
               <span>{mins}:{secs}</span>
               <div class="progress-container mx-3" id="progress-container" bind:this={progressContainer} on:click={setProgress}>
                   <div class="progress" id="progress" bind:this={progress}></div>
               </div>
-              <span>{dmins}:{dsecs}</span>
+              <span>{#if Number.isNaN(dmins)}0:00{:else}{dmins}:{dsecs}{/if}</span>
               </div>
             </div>
 
-            <div class="col-sm-2" style="display: contents;">
+            <div class="col-sm-3" style="display: contents;">
               <div class="navigation">
                 <button id="shuffle" class="action-btn action-btn-big">
                     <i class="fas fa-random"></i>

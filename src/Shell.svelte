@@ -40,7 +40,8 @@ let title
 let cover
 
 // Song titles
-const songs = ['oso', 'lucid'];
+const songs = ['oso', 'lucid', 'no do', 'time'];
+const artists = ['Brymo', 'Asa', 'Kiss Daiel', 'NF']
 
 // Keep track of song
 let songIndex = 0;
@@ -109,12 +110,12 @@ onMount( () => {loadSong(songs[songIndex])})
             </a>
           </li>          
           <div class="card rounded-0 p-0 shadow-sm my-3 mx-3">
-            <img src="images/oso.jpg" class="card-img-top rounded-0" alt="Angular pro sidebar">
+            <img src="images/lucid.jpg" class="card-img-top rounded-0" alt="Angular pro sidebar">
             <div class="card-body text-center">
-                <h6 class="card-title">Time is so Kind</h6>
+                <h6 class="card-title">9 Lives</h6>
                 <div class="row">
-                  <p class="col-sm-6">Brymo</p>
-                  <p class="col-sm-6">03:45</p>
+                  <p class="col-sm-6">Asa</p>
+                  <p class="col-sm-6">04:25</p>
                 </div>
             </div>
           </div>          
@@ -148,45 +149,24 @@ onMount( () => {loadSong(songs[songIndex])})
           <h4>Top 100 songs of Year 2019</h4>
         </div>
         <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mb-2">          
+        {#each songs as song, i}
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 mb-2">          
           <div class="card rounded-0 p-0 shadow-sm">
-            <img src="images/oso.jpg" class="card-img-top rounded-0" alt="Angular pro sidebar">
+            <img src="images/{songs[i]}.jpg" class="card-img-top rounded-0" alt="Cover Image">
             <div class="card-body text-center">
-                <h6 class="card-title">Time is so Kind</h6>
+                <h6 class="card-title">{song}</h6>
                 <div class="row">
-                  <p class="col-sm-6">Brymo</p>
+                  <p class="col-sm-6">{artists[i]}</p>
                   <p class="col-sm-6">03:45</p>
                 </div>
             </div>
           </div>          
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mb-2">          
-          <div class="card rounded-0 p-0 shadow-sm">
-            <img src="images/oso.jpg" class="card-img-top rounded-0" alt="Angular pro sidebar">
-            <div class="card-body text-center">
-                <h6 class="card-title">Time is so Kind</h6>
-                <div class="row">
-                  <p class="col-sm-6">Brymo</p>
-                  <p class="col-sm-6">03:45</p>
-                </div>
-            </div>
-          </div>          
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mb-2">          
-          <div class="card rounded-0 p-0 shadow-sm">
-            <img src="images/oso.jpg" class="card-img-top rounded-0" alt="Angular pro sidebar">
-            <div class="card-body text-center">
-                <h6 class="card-title">Time is so Kind</h6>
-                <div class="row">
-                  <p class="col-sm-6">Brymo</p>
-                  <p class="col-sm-6">03:45</p>
-                </div>
-            </div>
-          </div>         
-        </div>
+        {/each}
+
       </div>
 
-      <Player audio = {audio} cover = {cover} title = {title} />
+      <Player audio = {audio} title = {title} />
 
     </div>
 
